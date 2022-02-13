@@ -1,8 +1,14 @@
 import React from 'react';
 import { View, Text, SafeAreaView } from 'react-native'
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { NoteItem } from '../model/noteModel';
 
-const AllNotesView= (props: any) => {
+export interface AllNotesViewProps {
+    notes: NoteItem[]
+}
+
+
+const AllNotesView= (props: AllNotesViewProps) => {
+    console.warn("Notes ===>", props.notes)
     return(
         <View style={{ flex: 1 }}>
             <Text>All Notes Screen</Text>
