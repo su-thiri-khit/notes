@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, SafeAreaView } from 'react-native'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-const AllNotesScreen= (props: any) => {
+const AllNotesView= (props: any) => {
     return(
         <View style={{ flex: 1 }}>
             <Text>All Notes Screen</Text>
@@ -10,4 +10,4 @@ const AllNotesScreen= (props: any) => {
     )
 }
 
-export default AllNotesScreen
+export default AllNotesView

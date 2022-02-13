@@ -1,14 +1,18 @@
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { useRef, useState } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, FlatList } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, FlatList, Image } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { PagerView } from 'react-native-pager-view';
 
 import { Header } from '../components/Header';
 import { MenuToolStripBar } from '../components/MenuStripBar';
-import AllNotesScreen from './AllNotesScreen';
-import ArchivedScreen from './ArchivedScreen';
-import FavoriteScreen from './FavoriteScreen';
+import { NavigationParamList } from '../navigation/AppNavigator';
+import AllNotesView from './AllNotesView';
+import ArchivedNotesView from './ArchivedNotesView';
+import FavoriteNotesView from './FavoriteNotesView';
 
-const HomeScreen = (props: any) => {
+type Props = StackScreenProps<NavigationParamList, 'HomeScreen'>
+const HomeScreen = ({ navigation }: Props) => {
 
     const tabItems: string[] = ['All', 'Favorite', 'Archived']
     const [currentTab, setCurrentTab] = useState(0)
@@ -29,9 +33,35 @@ const HomeScreen = (props: any) => {
         />
     )
 
+    const goToCreateNote = () => {
+        navigation.navigate('CreateNoteScreen')
+    }
+
     return(
             <SafeAreaView style={styles.flex}>
-                <Header style={{paddingHorizontal: 8}}>
+                <Header 
+                    style={{paddingHorizontal: 8}}
+                    rightTitle={
+                        <>
+                            <TouchableOpacity 
+                                style={{ padding: 8, marginLeft: 4}}
+                                onPress={goToCreateNote}
+                            >
+                                <Image 
+                                    source={require("../assets/ic_create.png") }
+                                    style={{width: 30, height: 30}}/>
+                            </TouchableOpacity>
+                            
+                            <TouchableOpacity 
+                                style={{ padding: 8 }}
+                            >
+                                <Image 
+                                    source={require("../assets/ic_settings.png") } 
+                                    style={{width: 30, height: 30}}/>
+                            </TouchableOpacity>
+                        </>
+                    }
+                >
                     {menu}
                 </Header>
                     <View style={{ flex: 1, padding: 12 }}>
@@ -41,9 +71,9 @@ const HomeScreen = (props: any) => {
                             initialPage={0}
                             onPageSelected={(e) => setCurrentTab(e.nativeEvent.position)}
                         >
-                            <AllNotesScreen key="0" />
-                            <FavoriteScreen key="1" />
-                            <ArchivedScreen key="2" />
+                            <AllNotesView key="0" />
+                            <FavoriteNotesView key="1" />
+                            <ArchivedNotesView key="2" />
                         </PagerView>
                     </View>
         
