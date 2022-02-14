@@ -13,9 +13,9 @@ export const createTable = async (db: SQLiteDatabase) => {
     const query = `CREATE TABLE IF NOT EXISTS ${tableName}(
       id INTEGER PRIMARY KEY NOT NULL,
       title TEXT,
-      body TEXT NOT NULL,
-      created_at TEXT,
-      updated_at TEXT,
+      body TEXT,
+      created_at INTEGER,
+      updated_at INTEGER,
       is_favorite BIT false,
       is_archived BIT false
     );`
@@ -41,8 +41,9 @@ export const getNotes = async (db: SQLiteDatabase): Promise<NoteItem[]> => {
 
 
 export const saveNotes = async (db: SQLiteDatabase, notes: NoteItem[]) => {
+    const newNotes = notes[0]
     const insertQuery =
-      `INSERT OR REPLACE INTO ${tableName}(rowid, title, body, created_at, updated_at, is_favorite, is_archived) values` +
-      notes.map(i => `(${i.id}, '${i.title}', '${i.body}',  '${i.created_at}','${i.updated_at}', '${i.is_favorite}' , '${i.is_archived}' )`).join(',');
-    return db.executeSql(insertQuery);
+        `INSERT INTO ${tableName} VALUES (?,?,?,?,?,?,?)`;
+
+    return db.executeSql(insertQuery, [newNotes.id, newNotes.title, newNotes.body, newNotes.created_at, newNotes.updated_at, newNotes.is_favorite, newNotes.is_archived] );
   };

@@ -8,7 +8,6 @@ export interface AllNotesViewProps {
 
 
 const AllNotesView= (props: AllNotesViewProps) => {
-    console.warn("Notes ===>", props.notes)
     return(
         <View style={{ flex: 1 }}>
             <Text>All Notes Screen</Text>

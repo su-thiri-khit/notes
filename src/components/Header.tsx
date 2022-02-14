@@ -4,19 +4,23 @@ import { Platform, StyleProp, StyleSheet, Text, View, ViewStyle } from "react-na
 
 export type HeaderProps = {
     style?: StyleProp<ViewStyle>,
+    leftTitle?: ReactNode
     rightTitle?: ReactNode
     children?: ReactNode
 }
 
 export const Header = ({
     style,
+    leftTitle,
     rightTitle,
     children
 }: HeaderProps) => {
     return(
         <View style={[style, styles.appBarWrapper]}>
             <View style={styles.appBarView}>
-                <Text style={styles.leftTitleView}>Notes</Text>
+                <View style={styles.rightTitleView}>
+                    {leftTitle}
+                </View>
                 <View style={styles.rightTitleView}>
                     {rightTitle}
                 </View>
@@ -42,11 +46,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         alignItems: 'center', 
         justifyContent: 'space-between'
-    },
-    leftTitleView: {
-        flexDirection: 'column',
-        fontSize: 32,
-        fontWeight: "bold"
     },
     rightTitleView: {
         flexDirection: 'row', 

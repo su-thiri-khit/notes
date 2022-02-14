@@ -39,7 +39,9 @@ const HomeScreen = ({ navigation }: Props) => {
     )
 
     const goToCreateNote = () => {
-        navigation.navigate('CreateNoteScreen')
+        navigation.navigate('CreateNoteScreen', {
+            nextNoteId: notes ? notes.length : 0
+        })
     }
 
     const getAllNotes = useCallback(async () => {
@@ -67,6 +69,11 @@ const HomeScreen = ({ navigation }: Props) => {
             <SafeAreaView style={styles.flex}>
                 <Header 
                     style={{paddingHorizontal: 8}}
+                    leftTitle={
+                        <>
+                          <Text style={styles.headerText}>Notes</Text>
+                        </>
+                    }
                     rightTitle={
                         <>
                             <TouchableOpacity 
@@ -113,6 +120,11 @@ export default HomeScreen
 
 const styles = StyleSheet.create({
     flex: {
-      flex: 1,
+        flex: 1,
     },
+    headerText: {
+        flexDirection: 'column',
+        fontSize: 32,
+        fontWeight: "bold"
+    }
   });

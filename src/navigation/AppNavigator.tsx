@@ -6,7 +6,7 @@ import CreateNoteScreen from "../screens/CreateNoteScreen"
 
 export type NavigationParamList = {
     HomeScreen: any
-    CreateNoteScreen: any
+    CreateNoteScreen: { nextNoteId: number }
 }
 
 
@@ -22,6 +22,7 @@ const AppNavigator = () => {
                 />
                  <Stack.Screen name="CreateNoteScreen" 
                     component={CreateNoteScreen} 
+                    options={{ headerShown: false}}
                 />
              </Stack.Navigator>  
         </NavigationContainer>
