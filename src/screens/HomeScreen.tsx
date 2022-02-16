@@ -2,7 +2,7 @@ import { useIsFocused } from '@react-navigation/core';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, FlatList, Image } from 'react-native'
-import { ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { PagerView } from 'react-native-pager-view';
 
 import { Header } from '../components/Header';
@@ -56,6 +56,7 @@ const HomeScreen = ({ navigation, route }: HomeScreenProps) => {
            const db = await getDBConnection();
            await createTable(db);
            const storedNotes = await getNotes(db);
+           console.warn("Stored Notes =>", storedNotes)
            if(storedNotes.length) {
                setNotes(storedNotes)
            }else{
@@ -74,7 +75,7 @@ const HomeScreen = ({ navigation, route }: HomeScreenProps) => {
     return(
         <SafeAreaView style={styles.flex}>
             <Header 
-                style={{paddingHorizontal: 8}}
+                style={{paddingHorizontal: 12}}
                 leftTitle={
                     <>
                         <Text style={styles.headerText}>Notes</Text>
@@ -103,22 +104,36 @@ const HomeScreen = ({ navigation, route }: HomeScreenProps) => {
             >
                 {menu}
             </Header>
-                <View style={{ flex: 1, padding: 12 }}>
-                    {notes && (
-                        <PagerView 
-                            ref={pagerViewRef}
-                            style={styles.flex} 
-                            initialPage={0}
-                            onPageSelected={(e) => setCurrentTab(e.nativeEvent.position)}
-                        >
-                            <AllNotesView key="0" notes={notes} 
-                                navigation={navigation}
-                                route={route}
-                            />
+            
+            <View style={{ flex: 1, padding: 12 }}>
+                {notes && (
+                    <PagerView 
+                        ref={pagerViewRef}
+                        style={styles.flex} 
+                        initialPage={0}
+                        onPageSelected={(e) => setCurrentTab(e.nativeEvent.position)}
+                    >
+                        <AllNotesView 
+                            key="0" 
+                            notes={notes} 
+                            navigation={navigation}
+                            route={route}
+                        />
                         
-                            <FavoriteNotesView key="1" />
-                            <ArchivedNotesView key="2" />
-                        </PagerView>
+                        <FavoriteNotesView 
+                            key="1" 
+                            notes={notes} 
+                            navigation={navigation}
+                            route={route}
+                        />
+                            
+                        <ArchivedNotesView
+                            key="2" 
+                            notes={notes} 
+                            navigation={navigation}
+                            route={route}
+                        />
+                    </PagerView>
                     )}  
                 </View>
          </SafeAreaView>        
