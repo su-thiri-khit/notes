@@ -1,36 +1,14 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, Image, TextInput, StyleSheet } from 'react-native'
+import { Text, SafeAreaView, TouchableOpacity, Image, View, TextInput, StyleSheet, Button } from 'react-native'
 import { Header } from '../components/Header';
-import { getDBConnection, saveNotes } from '../database/dataBaseService';
 import { NavigationParamList } from '../navigation/AppNavigator';
 
-type Props = StackScreenProps<NavigationParamList, 'CreateNoteScreen'>
+type Props = StackScreenProps<NavigationParamList, 'UpdateNoteScreen'>
 
-const CreateNoteScreen= ({route, navigation}: Props) => {
+const UpdateNoteScreen= ({ navigation, route }: Props) => {
 
-    const { nextNoteId } = route.params
-
-    const [noteTitle, setNoteTitle] = useState<string>();
-    const [noteBody, setNoteBody] = useState<string>();
-    
-    const saveNote = async () => {
-        try{
-            const newNote = [{ id: nextNoteId, 
-                title: noteTitle,
-                body: noteBody,
-                created_at:  new Date().getMilliseconds().toString(),
-                updated_at: new Date().getMilliseconds().toString(),
-                is_favorite: false,
-                is_archived: false
-            }]
-            const db = await getDBConnection();
-            await saveNotes(db, newNote);
-            navigation.goBack()
-        } catch (error) {
-           console.error("Error ==>", error)
-        }
-    }
+    const { note } = route.params
 
     const header = (
         <Header 
@@ -53,7 +31,7 @@ const CreateNoteScreen= ({route, navigation}: Props) => {
                 <>
                     <TouchableOpacity 
                         style={{ padding: 8, marginLeft: 4}}
-                        onPress={saveNote}
+                        // onPress={saveNote}
                     >
                         <Text style={{alignSelf: 'center', fontSize: 20, fontWeight: 'bold', color: '#808080'}}> Done </Text>
                     </TouchableOpacity>
@@ -61,33 +39,39 @@ const CreateNoteScreen= ({route, navigation}: Props) => {
             }
         />
     )
-
+    
     return(
         <SafeAreaView style={{ flex: 1 }}>
-           {header}
-           <View>
+            {header}
+            <View>
                 <TextInput 
                     style={styles.textInputView}
                     multiline={true}
-                    placeholder="Type title here!"
+                    value={note.title}
                     autoFocus={true}
+                    editable={false}
                     numberOfLines={5}
-                    onChangeText={(text) => setNoteTitle(text)}
-                />
+                /> 
                 <TextInput 
                     style={[styles.textInputView , {minHeight: '50%'}] }
                     multiline={true}
-                    placeholder="Type note here!"
-                    onChangeText={(text) => setNoteBody(text)}
+                    value={note.body}
+                    editable={false}
                 />
+                <View style={styles.buttonView}>
+                     <Button
+                       title="Add to Favorite"
+                    />
+                     <Button
+                       title="Delete"
+                    />
+                </View>
            </View>
-           
         </SafeAreaView>
     )
 }
 
-export default CreateNoteScreen
-
+export default UpdateNoteScreen
 
 const styles = StyleSheet.create({
     textInputView: {
@@ -96,5 +80,10 @@ const styles = StyleSheet.create({
         padding: 8, 
         borderWidth: 1, 
         borderColor: '#808080'
+    },
+    buttonView: {
+        flexDirection: 'row', 
+        marginHorizontal: 16,
+        marginVertical: 8
     }
 });
