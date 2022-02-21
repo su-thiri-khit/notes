@@ -56,7 +56,6 @@ const HomeScreen = ({ navigation, route }: HomeScreenProps) => {
            const db = await getDBConnection();
            await createTable(db);
            const storedNotes = await getNotes(db);
-           console.warn("Stored Notes =>", storedNotes)
            if(storedNotes.length) {
                setNotes(storedNotes)
            }else{
@@ -94,6 +93,7 @@ const HomeScreen = ({ navigation, route }: HomeScreenProps) => {
                             
                         <TouchableOpacity 
                             style={{ padding: 8 }}
+                            //To do for settings.
                         >
                             <Image 
                                 source={require("../assets/ic_settings.png") } 

@@ -535,7 +535,7 @@ SPEC CHECKSUMS:
   React-logger: 23de8ea0f44fa00ee77e96060273225607fd4d78
   react-native-pager-view: a4834c4b7fe672ec53f38928f0ced5e32443c371
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
-  react-native-sqlite-storage: 6df009b8b67fe34c57c5fd06ee8fff7669fece6d
+  react-native-sqlite-storage: f6d515e1c446d1e6d026aa5352908a25d4de3261
   React-perflogger: 3c9bb7372493e49036f07a82c44c8cf65cbe88db
   React-RCTActionSheet: 052606483045a408693aa7e864410b4a052f541a
   React-RCTAnimation: 08d4cac13222bb1348c687a0158dfd3b577cdb63

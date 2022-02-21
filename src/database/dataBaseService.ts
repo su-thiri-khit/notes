@@ -1,4 +1,4 @@
-import { DEBUG, enablePromise, openDatabase, SQLiteDatabase } from "react-native-sqlite-storage";
+import { openDatabase, SQLiteDatabase } from "react-native-sqlite-storage";
 import { NoteItem } from "../model/noteModel";
 
 const dbName = 'NoteDB'
@@ -34,7 +34,6 @@ export const getNotes = async (db: SQLiteDatabase): Promise<NoteItem[]> => {
       });
       return notes;
     } catch (error) {
-      console.error(error);
       throw Error('Failed to get notes !!!');
     }
 };
